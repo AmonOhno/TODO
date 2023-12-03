@@ -1,0 +1,18 @@
+/* Add some styles to a class */
+li todo-default {
+    font-weight: normal;
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+};
+
+li todo-done {
+    font-weight: normal;
+    text-decoration: line-through;;
+    color: rgb(92, 92, 92);
+};
+
+li todo-current {
+    font-weight: bold;
+    text-decoration: none;
+    color: rgb(210, 4, 4)
+};
