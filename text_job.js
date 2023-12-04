@@ -1,41 +1,33 @@
-//JavaScriptによるHTMLとキュメントの操作は、DOM（Documentオブジェクト）
+
+//各[done]ボタンのクリックイベントを取得
+const buttonDone = document.querySelectorAll('.btn-done');
+[...buttonDone].forEach((w_button) => {
+    w_button.addEventListener('click', function() {todoEnvChangeClass(w_button)});
+});
+
+//各[done]ボタンのクリックイベントを取得
+const buttonCurrnt = document.querySelectorAll('.btn-current');
+[...buttonCurrnt].forEach((w_button) => {
+    w_button.addEventListener('click', function() {todoEnvChangeClass(w_button)});
+});
 
 
-
-
-//[done]ボタンクリック時、リストのクラス'todo_done'を追加する処理
-const buttonDone = document.getElementById('button-done1');
-console.log(buttonDone);
-
-buttonDone.addEventListener('click', function() {todoEnvChangeDone(buttonDone)});
-
-// buttonDone.forEach((w_button) => {
-//     w_button.addEventListener('click', todoEnvChangeDone(w_button));
-// });
-
-function todoEnvChangeDone(e){
+//<li>タグのクラス属性をtodo-doneに更新する
+function todoEnvChangeClass(e){
     console.log(e);
-    // const li = e.closest('li');
-    // for (var i = 1; i < li.classList.length; i++){
-    //     li.classList.remove(); 
-    // };
-    // li.classList.add('todo-done');
+    var li = e.closest('li');
+    if (e.classList.contains('btn-done')) {
+        li.classList.remove('txt-default');
+        li.classList.remove('txt-current');
+        li.classList.add('txt-done'); //ここがHTMLで読み込んでくれない
+    } 
+    else if (e.classList.contains('btn-current')) {
+        li.classList.remove('txt-default');
+        li.classList.remove('txt-done');
+        li.classList.add('txt-current'); //ここがHTMLで読み込んでくれない
+    };
+
 };
 
-// //[curernt]ボタンクリック時、リストのクラス'todo_curernt'を追加する処理
-// const buttonCurrent = document.getElementById('button-current');
-// console.log(buttonCurrent);
-
-// buttonCurrent.forEach((w_button) => {
-//     w_button.addEventListener('click', todoEnvChangeCurrent(w_button));
-// });
-
-// function todoEnvChangeCurrent(e){
-//     const li = e.closest('li');
-//     for (var i = 1; i < li.classList.length; i++){
-//         li.classList.remove(); 
-//     };
-//     li.classList.add('todo-current');
-// };
 
 
