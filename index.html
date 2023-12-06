@@ -9,10 +9,13 @@
         <title>TODO Application</title>
     </head>
     <body>
+        <label for="newtodo">タスク作成:</label>
+        <input type="text" id="newtodo" name="newtodo" required>
+        <input type="button" class="btn-newtodo" value="作成">
         <ul>
-            <li class="txt-default">TODO 1<button class="btn-done" id="b_done1">done</button><button class="btn-current" id="b_current1">Now</button></li>
-            <li class="txt-default">TODO 2<button class="btn-done" id="b_done2">done</button><button class="btn-current" id="b_current2">Now</button></li>
-            <li class="txt-default">TODO 3<button class="btn-done" id="b_done3">done</button><button class="btn-current" id="b_current3">Now</button></li>
+            <li class="txt-default">TODO 1<button class="btn-done">完了</button><button class="btn-current">優先</button></li>
+            <li class="txt-default">TODO 2<button class="btn-done">完了</button><button class="btn-current">優先</button></li>
+            <li class="txt-default">TODO 3<button class="btn-done">完了</button><button class="btn-current">優先</button></li>
         </ul>
         <script src="./text_job.js"></script>
     </body>

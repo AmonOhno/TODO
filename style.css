@@ -3,16 +3,16 @@
     font-weight: normal;
     text-decoration: none;
     color: rgb(0, 0, 255);
-};
+}
 
 .txt-done {
     font-weight: normal;
     text-decoration: line-through;;
     color: rgb(122, 122, 122);
-};
+}
 
 .txt-current {
-    font-weight: bold;
+    font-weight: normal;
     text-decoration: none;
     color: rgb(255, 4, 4);
-};
+}
