@@ -2,7 +2,8 @@
 <html lang="ja">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes, minimum-scale=1, maximum-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1,
+            user-scalable=yes, minimum-scale=1, maximum-scale=1">
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@asiangate00815" />
         <link rel="stylesheet" href="./style.css">
@@ -12,11 +13,16 @@
         <label for="newtodo">タスク作成:</label>
         <input type="text" id="newtodo" name="newtodo" required>
         <input type="button" class="btn-newtodo" value="作成">
-        <ul>
-            <li class="txt-default">TODO 1<button class="btn-done">完了</button><button class="btn-current">優先</button></li>
-            <li class="txt-default">TODO 2<button class="btn-done">完了</button><button class="btn-current">優先</button></li>
-            <li class="txt-default">TODO 3<button class="btn-done">完了</button><button class="btn-current">優先</button></li>
-        </ul>
+        <table border="1" class="u_table">
+            <tr>
+                <th>作業内容</th>
+                <th>状態</th>
+            </tr>
+            <div class="u_task">
+            </div>
+        </table>
+        <!-- <ul class="u_task">
+        </ul> -->
         <script src="./text_job.js"></script>
     </body>
 </html>

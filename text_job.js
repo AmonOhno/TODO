@@ -1,61 +1,98 @@
 
-//[作成]ボタンのクリックイベントを取得
+//[作成]ボタン実行
 const buttonMakeTask = document.querySelector(".btn-newtodo");
-buttonMakeTask.addEventListener("click", function() {
+const taskCountLimit = 3
 
-    //新規<li>の構造作成処理
+buttonMakeTask.addEventListener("click", function () {
+
+    // タスク名空欄の登録不可
     var makeTaskName = document.querySelector("#newtodo").value;
-    var newli = document.createElement("li");
-    newli.classList.add("txt-default");
-    newli.textContent = makeTaskName;
-
-    var newbuttonDone = document.createElement("button");
-    newbuttonDone.classList.add("btn-done");
-    newbuttonDone.textContent = "完了";
-    var newbuttonCurrent = document.createElement("button");
-    newbuttonCurrent.classList.add("btn-current");
-    newbuttonCurrent.textContent = "優先";
-
-    newli.appendChild(newbuttonDone);
-    newli.appendChild(newbuttonCurrent);  
-
-    console.log(newli);
-
-    //既存<li>に追加処理
-    var lastli_arr = document.querySelectorAll(".btn-done");
-    var lastli = lastli_arr.item(lastli_arr.length - 1);
-
-    newli.insertAdjacentElement("afterend", lastli); //ここが反映されない！！
-})
-
-
-
-//各[done]ボタンのクリックイベントを取得
-const buttonDone = document.querySelectorAll(".btn-done");
-[...buttonDone].forEach((w_button) => {
-    w_button.addEventListener("click", function() {todoEnvChangeClass(w_button)});
-})
-
-//各[done]ボタンのクリックイベントを取得
-const buttonCurrnt = document.querySelectorAll(".btn-current");
-[...buttonCurrnt].forEach((w_button) => {
-    w_button.addEventListener("click", function() {todoEnvChangeClass(w_button)});
-})
-
-//<li>タグのクラス属性をtodo-doneに更新する
-function todoEnvChangeClass(e){
-    console.log(e);
-    var li = e.closest("li");
-    if (e.classList.contains("btn-done")) {
-        li.classList.remove("txt-default");
-        li.classList.remove("txt-current");
-        li.classList.add("txt-done");
-    } 
-    else if (e.classList.contains("btn-current")) {
-        li.classList.remove("txt-default");
-        li.classList.remove("txt-done");
-        li.classList.add("txt-current");
+    if (!makeTaskName) {
+        alert("タスク名は何か入れろや！")
+        return
     }
+
+    // 何個目のタスクか確認
+    const nodeList = document.querySelector(".u_table");
+    const nextTaskNumber = nodeList.rows.length;
+
+    // タスク数の上限を超えての登録不可
+    if (taskCountLimit < nextTaskNumber) {
+        alert("タスク抱えすぎだから、これ以上は追加できないよ")
+        return
+    }
+
+    //<table>の構成取得
+    var taskTable = nodeList;
+
+    //タスク行の<tr>作成
+    var newTr = document.createElement("tr");
+    newTr.classList.add(`txt-default-${nextTaskNumber}`);
+
+    //タスク名の<td>作成
+    var taskNameTd = document.createElement("td");
+    taskNameTd.classList.add(`taskName-${nextTaskNumber}`);
+    taskNameTd.textContent = makeTaskName;
+    newTr.appendChild(taskNameTd);
+
+    // アクションの<td>作成
+    var actionTd = document.createElement("td");
+
+    var newbuttonDone = createActionButtonsTd(`btn-done-${nextTaskNumber}`, "完了")
+    var newbuttonCurrent = createActionButtonsTd(`btn-current-${nextTaskNumber}`, "優先")
+    var newbuttonRemove = createActionButtonsTd(`btn-remove-${nextTaskNumber}`, "削除")
+    actionTd.appendChild(newbuttonDone);
+    actionTd.appendChild(newbuttonCurrent);
+    actionTd.appendChild(newbuttonRemove);
+    newTr.appendChild(actionTd);
+
+    //<tr>に追加
+    taskTable.appendChild(newTr);
+    document.querySelector("#newtodo").value = ''
+
+})
+
+/*
+    アクションボタン作成
+
+    @param buttonSelectorName：buttonに付与するclass
+    @param displayText：ボタンに表示するテキスト
+*/
+function createActionButtonsTd(buttonSelectorName, displayText) {
+    let actionButton = document.createElement("button");
+    actionButton.classList.add(buttonSelectorName);
+    actionButton.textContent = displayText;
+    actionButton.addEventListener("click", function () { todoEnvChangeClass(actionButton) });
+    return actionButton
 }
 
+// 正規表現リテラルを使用
+const doneRegex = /btn-done/
+const currentRegex = /btn-current/
+const removeRegex = /btn-remove/
 
+/*
+    タスク状態更新
+*/
+function todoEnvChangeClass(e) {
+    let clickButtonClass = e.classList.value
+    let tr = e.closest("tr");
+    // タスク名取得
+    const firstTd = tr.querySelector("td:first-child");
+    const taskNameClass = firstTd.className.split(" ")[0]
+
+    // 完了
+    if (doneRegex.test(clickButtonClass)) {
+        firstTd.className = `${taskNameClass} txt-done`;
+        e.disabled = true
+    }
+    // 優先
+    else if (currentRegex.test(clickButtonClass)) {
+        firstTd.className = `${taskNameClass} txt-current`;
+        e.disabled = true
+    }
+    // 削除
+    else if (removeRegex.test(clickButtonClass)) {
+        e.closest("tr").remove();
+    }
+}
