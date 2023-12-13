@@ -95,4 +95,7 @@ function todoEnvChangeClass(e) {
     else if (removeRegex.test(clickButtonClass)) {
         e.closest("tr").remove();
     }
+
+    console.log(document.documentElement.outerHTML);
+    
 }
